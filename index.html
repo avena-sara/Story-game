@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story Adventure</title>
+    <title>Lost Path</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        
+
+    <!-- Home Page -->
+    <div id="home-screen">
+        <h1>Lost Path</h1>
+        <p>A journey of mystery and choices</p>
+        <button id="start-game-btn">Start Game</button>
+    </div>
+
+    <!-- Game Container (Hidden initially) -->
+    <div id="game-container" style="display: none;">
         <p id="story-text">Your journey begins...</p>
         <div id="choices"></div>
     </div>
+
+    <!-- Death Screen -->
+    <div id="death-screen" style="display: none;">
+        <div id="drowned">You Drowned</div>
+        <div id="warning">DON'T TRUST STRANGERS</div>
+        <button onclick="restartGame()">Restart</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
