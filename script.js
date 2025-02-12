@@ -135,9 +135,7 @@ function showStory(scenario) {
     const storyText = document.getElementById("story-text");
     const choicesDiv = document.getElementById("choices");
 
-    // Use innerHTML instead of innerText to support HTML formatting
     storyText.innerHTML = story[scenario].text;
-
     choicesDiv.innerHTML = "";
 
     story[scenario].choices.forEach((choice, index) => {
@@ -159,19 +157,17 @@ function showStory(scenario) {
 
 function makeChoice(choice) {
     if (choice.next === "death") {
-        document.getElementById("game-container").style.display = "none";  // Hide the game UI
-        document.getElementById("death-screen").style.display = "flex";   // Show the death screen
+        document.getElementById("game-container").style.display = "none"; 
+        document.getElementById("death-screen").style.display = "flex";   
     } else {
         showStory(choice.next);
     }
 }
 
-
 function restartGame() {
-    document.getElementById("death-screen").style.display = "none";  // Hide death screen
-    document.querySelector("game-container").style.display = "block"; // Show game UI
-    showStory("start");  // Restart from the beginning
+    document.getElementById("death-screen").style.display = "none";  
+    document.getElementById("game-container").style.display = "none";  
+    document.getElementById("home-screen").style.display = "block";  
 }
+ 
 
-// Start the game
-startGame();
