@@ -23,9 +23,29 @@
 
     <!-- Death Screen -->
     <div id="death-screen" style="display: none;">
+        <h2>GAME OVER</h2>
         <div id="drowned">You Drowned</div>
         <div id="warning">DON'T TRUST STRANGERS</div>
+        <button onclick="exitGame()">Exit</button>
         <button onclick="restartGame()">Restart</button>
+    </div>
+
+    <div id="escape-screen" style="display: none;">
+        <div id="escape-box">
+        <h2>Game Over</h2>
+        <p>Congratulations! You Found Your Way Out!</p>
+        <button onclick="exitGame()">Exit</button>
+        <button onclick="restartGame()">Restart</button>
+        </div>
+    </div>
+
+    <div id="lost-screen" style="display: none;">
+        <div id="lost-box">
+            <h2>You Lost</h2>
+            <p>You gave the wrong answer and are trapped inside the forest forever!</p>
+            <button onclick="exitGame()">Exit</button>
+            <button onclick="restartGame()">Restart</button>
+        </div>
     </div>
 
     <script src="script.js"></script>

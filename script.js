@@ -45,24 +45,27 @@ const story = {
                <br><br>
                <strong>"I make two people out of one. What am I?"</strong>`,
         choices: [
-            { text: "A Mirror", next: "escapeHouse" },  // Correct Answer
-            { text: "A Shadow", next: "trappedHouse" }  
+            { text: "A Mirror", next: "escape" },  // Correct Answer
+            { text: "A Shadow", next: "lost" }  
         ]
     },
     magicBook: {
-        text: `You pick up the ancient book. As soon as you open it, glowing text appears on the pages. A deep voice echoes in your mind:  
-           <br><br>
-           <strong>"I have cities, but no houses. <br>
-           I have mountains, but no trees. <br>
-           I have water, but no fish. <br>
-           What am I?"</strong>`,
+        text: `<div style="line-height: 1.0;">
+            You pick up the ancient book. As soon as you open it, glowing text appears on the pages. A deep voice echoes in your mind:<br>
+            "I have cities, but no houses.<br>
+            I have mountains, but no trees.<br>
+            I have water, but no fish.<br>
+            What am I?"
+        </div>`,
         choices: [
-            { text: "A Desert", next: "bookDesert" },
-            { text: "A Map", next: "bookCorrect" },  // ✅ Correct Answer
-            { text: "A Dream", next: "bookDream" },
-            { text: "A Painting", next: "bookPainting" }
+            { text: "A Desert", next: "lost" },
+            { text: "A Map", next: "escape" },  // ✅ Correct Answer
+            { text: "A Dream", next: "lost" },
+            { text: "A Painting", next: "lost" }
         ]
     },
+    
+
 
     climbTree: {
         text: "You climb the tree and spot a river and a tall tower.",
@@ -81,7 +84,8 @@ const story = {
     },
 
     tower: {
-        text: `As you enter the towering structure, a strange energy surrounds you.  
+        text: `<div style="line-height: 1.0;">
+               As you enter the towering structure, a strange energy surrounds you.  
                Suddenly, the world shifts—you find yourself in a mysterious dimension!  
                The walls are covered with ancient images:  
                A locked treasure chest 🏴‍☠️
@@ -89,12 +93,12 @@ const story = {
                A shadowy figure with glowing eyes 👀 
                
                A voice echoes in your mind:  
-               <br><br>
+               
                <strong>"What is the hidden link between them all?"</strong>`,
         choices: [
-            { text: "A Curse", next: "curseRevealed" },  // Correct Answer (Leads to Escape)
-            { text: "A Secret", next: "secretTrap" },  
-            { text: "An Escape", next: "illusionTrap" }  
+            { text: "A Curse", next: "escape" },  // Correct Answer (Leads to Escape)
+            { text: "A Secret", next: "lost" },  
+            { text: "An Escape", next: "lost" }  
         ]
     },
 
@@ -105,6 +109,7 @@ const story = {
             { text: "Take the note and read it", next: "emptyHouse" }
         ]
     }
+    
 };
 
 const backgrounds = {
@@ -115,14 +120,27 @@ const backgrounds = {
     river: "url('images/boat.jpg')",
     flickerLight: "url('images/light.jpg')",
     magicBook:"url('images/book.jpg')",
-    emptyHouse:"url('images/emptyhouse.jpeg')",
+    emptyHouse:"url('images/emptyhouse.jpg')",
     darkForest:"url('images/door.jpg')",
+    escape:"url('images/exit.jpg')",
     tower:"url('images/riddle.jpg')"
 };
 
+document.body.classList.add("background-body");
+
+// Function to change background dynamically
+function changeBackground(scenario) {
+    const imageUrl = backgrounds[scenario] || "images/default.jpg";
+    document.body.style.backgroundImage = `url('${imageUrl}')`;
+}
+
+// Start the game with the correct background
 function startGame() {
+    changeBackground("start");
     showStory("start");
 }
+
+
 
 function showStory(scenario) {
     if (!story[scenario]) {
@@ -130,8 +148,10 @@ function showStory(scenario) {
         return;
     }
 
-    document.body.style.backgroundImage = backgrounds[scenario] || "url('images/default.jpg')";
+    changeBackground(scenario);
 
+    document.body.style.backgroundImage = backgrounds[scenario] || "url('images/default.jpg')";
+    
     const storyText = document.getElementById("story-text");
     const choicesDiv = document.getElementById("choices");
 
@@ -159,15 +179,30 @@ function makeChoice(choice) {
     if (choice.next === "death") {
         document.getElementById("game-container").style.display = "none"; 
         document.getElementById("death-screen").style.display = "flex";   
-    } else {
+    } else if (choice.next === "escape") {
+        document.getElementById("game-container").style.display = "none"; 
+        document.getElementById("escape-screen").style.display = "flex";   
+    } else if (choice.next === "lost") {  
+        document.getElementById("game-container").style.display = "none";
+        document.getElementById("lost-screen").style.display = "flex";
+    }else {
         showStory(choice.next);
     }
 }
 
 function restartGame() {
-    document.getElementById("death-screen").style.display = "none";  
-    document.getElementById("game-container").style.display = "none";  
-    document.getElementById("home-screen").style.display = "block";  
+   
+    document.getElementById("game-container").style.display = "none";
+    document.getElementById("death-screen").style.display = "none";
+    document.getElementById("escape-screen").style.display = "none";
+    document.getElementById("home-screen").style.display = "block";
+    document.getElementById("lost-screen").style.display = "none"; // ✅ Ensure lost screen is hidden
+    document.getElementById("home-screen").style.display = "flex"; 
+    }
+
+function exitGame() {
+    window.close();
 }
+
  
 
